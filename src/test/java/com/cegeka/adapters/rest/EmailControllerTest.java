@@ -11,6 +11,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+import static org.mockito.Mockito.verify;
+
 @WebMvcTest(EmailController.class)
 public class EmailControllerTest {
 
@@ -35,6 +37,9 @@ public class EmailControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(emailRequest)))
                 .andExpect(MockMvcResultMatchers.status().isOk());
+
+        verify(emailService).sendEmail(to, subject, body);
+
 
         // You can add additional assertions to verify the behavior or the response if needed
     }
